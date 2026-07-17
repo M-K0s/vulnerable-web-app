@@ -2,7 +2,7 @@ name: Build, Push and Deploy to Azure Container Apps
 
 on:
   push:
-    branches: [main]
+    branches: [master]
 
 jobs:
   build-push-deploy:
@@ -38,4 +38,3 @@ jobs:
               --name vulnerable-web-app-mariano \
               --resource-group rg-vulnerable-web-app \
               --image docker.io/${{ secrets.DOCKERHUB_USERNAME }}/vulnerable-web-app-mariano:latest
-              
