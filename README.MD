@@ -1,3 +1,7 @@
+> 📄 Ver [`proyecto-final-devsecops.md`](./proyecto-final-devsecops.md) para el detalle completo del pipeline de CI/CD, las decisiones técnicas y el despliegue en Azure de este fork.
+
+---
+
 # Una aplicación vulnerable para aplicar seguridad
 
 ### Cómo Desplegar aplicación Docker NodeJS en Heroku de forma local
