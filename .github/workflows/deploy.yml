@@ -1,29 +1,11 @@
-name: Build, Push and Deploy to Azure Container Apps
-
-on:
-  push:
-    branches: [master]
-
-jobs:
-  build-push-deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push Docker image
+- name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/vulnerable-web-app-mariano:latest
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/vulnerable-web-app-mariano:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/vulnerable-web-app-mariano:${{ github.sha }}
 
       - name: Log in to Azure
         uses: azure/login@v2
@@ -37,4 +19,5 @@ jobs:
             az containerapp update \
               --name vulnerable-web-app-mariano \
               --resource-group rg-vulnerable-web-app \
-              --image docker.io/${{ secrets.DOCKERHUB_USERNAME }}/vulnerable-web-app-mariano:latest
+              --image docker.io/${{ secrets.DOCKERHUB_USERNAME }}/vulnerable-web-app-mariano:${{ github.sha }}
+              
